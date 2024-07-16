@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.rahul286.pdfunlock</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/Users/rahul286/Library/Caches/pypoetry/virtualenvs/pdf-unlock-fD8-j5pS-py3.12/bin/python3</string>
+            <string>/Users/rahul286/Developer/pdf-unlock/pdf.py</string>
+        </array>
+        <key>WatchPaths</key>
+        <array>
+            <string>/Users/rahul286/Downloads</string>
+        </array>
+        <key>WorkingDirectory</key>
+        <string>/Users/rahul286/Downloads/</string>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>StandardErrorPath</key>
+        <string>/Users/rahul286/Developer/pdf-unlock/error.log</string>
+        <key>StandardOutPath</key>
+        <string>/Users/rahul286/Developer/pdf-unlock/output.log</string>
+    </dict>
+</plist>

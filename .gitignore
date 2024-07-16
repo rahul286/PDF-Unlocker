@@ -1,0 +1,4 @@
+*.log
+passwords.txt
+*.swp
+file-list.pkl

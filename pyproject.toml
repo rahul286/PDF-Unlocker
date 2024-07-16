@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pdf-unlock"
+version = "0.1.0"
+description = ""
+authors = ["Rahul Bansal <rahul286@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pypdf = "^4.3.0"
+cryptography = "^42.0.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
