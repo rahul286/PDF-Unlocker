@@ -1,4 +1,8 @@
 import os
+
+# Get the directory of the current script (pdf.py)
+script_directory = os.path.dirname(os.path.realpath(__file__))
+
 import pickle
 
 from pypdf import PdfReader, PdfWriter
@@ -8,7 +12,7 @@ def unlock_pdf(pdf_file):
     reader = PdfReader(pdf_file)
 
     if reader.is_encrypted:
-        with open("/Users/rahul286/Developer/pdf-unlock/passwords.txt", "r") as file:
+        with open(os.path.join(script_directory, "passwords.txt"), "r") as file:
             for line in file:
                 password = line.strip()
                 try:
@@ -54,7 +58,7 @@ def load_file_list(file_path):
 
 def main():
     directory = "/Users/rahul286/Downloads"
-    storage_file = "/Users/rahul286/Developer/pdf-unlock/file-list.pkl"
+    storage_file = os.path.join(script_directory, "file-list.pkl")
 
     # Load the previous list of files
     old_files = load_file_list(storage_file)
@@ -81,17 +85,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-#     return writer
-
-# reader = PdfReader(locked_pdf_path)
-
-# if reader.is_encrypted:
-#     reader.decrypt("AMMPB9617L")
-
-# writer = PdfWriter(clone_from=reader)
-
-# # Save the new PDF to a file
-# with open("unlocked.pdf", "wb") as f:
-#     writer.write(f)
