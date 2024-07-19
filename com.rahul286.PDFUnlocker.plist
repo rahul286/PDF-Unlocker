@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.rahul286.PDFUnlocker</string>
+        <key>ProgramArguments</key>
+        <array>
+            <!-- <string>/Users/rahul286/Library/Caches/pypoetry/virtualenvs/pdf-unlock-fD8-j5pS-py3.12/bin/python3</string> -->
+            <string>/Users/rahul286/Developer/PDFUnlocker/PDFUnlocker.py</string>
+            <!-- <string>/opt/homebrew/bin/PDFUnlocker</string> -->
+        </array>
+        <key>WatchPaths</key>
+        <array>
+            <!-- <string>/Users/rahul286/Downloads</string> -->
+            <string>~/Downloads</string>
+        </array>
+        <key>WorkingDirectory</key>
+        <!-- <string>/Users/rahul286/Downloads/</string> -->
+        <string>~/Downloads/</string>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>StandardErrorPath</key>
+        <string>/Users/rahul286/Developer/PDFUnlocker/logs/error.log</string>
+        <key>StandardOutPath</key>
+        <string>/Users/rahul286/Developer/PDFUnlocker/logs/output.log</string>
+    </dict>
+</plist>
+
+
+<!-- https://stackoverflow.com/questions/53549988/where-are-homebrew-services-logs#:~:text=The%20usual%20logs%20end%20up,local%2Fvar%2Flog%2F%20. -->
