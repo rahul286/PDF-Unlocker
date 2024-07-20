@@ -1,3 +1,5 @@
+# PDF Unlocker
+
 A simple launch agent that monitors `~/Downloads` folder, automatically unlock PDF files with known passwords.
 
 You are expected to supply passwords PDF files commonly used by your banks, credit cards and other companies.
@@ -9,6 +11,8 @@ Change permission
 ```
 chmod +x /Users/rahul286/Developer/pdf-unlock/pdf.py
 ```
+
+## Configuration
 
 Add PDF passwords in plain-text. One password on each line.
 
