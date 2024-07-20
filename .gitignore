@@ -1,4 +1,6 @@
 *.log
+logs/*
 passwords.txt
 *.swp
 file-list.pkl
+.DS_Store

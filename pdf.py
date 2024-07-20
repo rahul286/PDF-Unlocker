@@ -1,11 +1,11 @@
 import os
+import pickle
+import time
+
+from pypdf import PdfReader, PdfWriter
 
 # Get the directory of the current script (pdf.py)
 script_directory = os.path.dirname(os.path.realpath(__file__))
-
-import pickle
-
-from pypdf import PdfReader, PdfWriter
 
 
 def unlock_pdf(pdf_file):
@@ -13,14 +13,28 @@ def unlock_pdf(pdf_file):
 
     if reader.is_encrypted:
         with open(os.path.join(script_directory, "passwords.txt"), "r") as file:
+            attempt = 0
             for line in file:
+                attempt += 1
+                start_time = time.time()
                 password = line.strip()
                 try:
                     if reader.decrypt(password):
                         print(f"Password found: {password}")
+                        end_time = time.time()
+                        iteration_time = end_time - start_time
+                        print(
+                            f"Time taken for attempt {attempt:02d} and password '{password}': {iteration_time} seconds"
+                        )
                         break
                 except Exception as e:
                     print(f"Error trying password {password}: {e}")
+
+                end_time = time.time()
+                iteration_time = end_time - start_time
+                print(
+                    f"Time taken for attempt {attempt:02d} and password '{password}': {iteration_time} seconds"
+                )
         writer = PdfWriter(clone_from=reader)
 
         # Save the new PDF to a file
@@ -66,6 +80,10 @@ def main():
     # Get the current list of files
     current_files = get_pdf_files_in_directory(directory)
 
+    if not old_files:
+        print("No previous file list found. FIRST RUN.")
+        old_files = current_files
+
     # Find new files
     new_files = find_new_files(directory, old_files)
 
@@ -73,8 +91,13 @@ def main():
         print("New PDF file(s) found")
         for file in new_files:
             print(file)
+
+            start_time = time.time()
             unlock_pdf(os.path.join(directory, file))
-            # open the file using MacOS open command
+
+            end_time = time.time()
+            time_taken = end_time - start_time
+            print(f"Total Time taken: {time_taken} seconds")
             os.system(f'open "{os.path.join(directory, file)}"')
     else:
         print("No newly created PDF file(s) found.")
