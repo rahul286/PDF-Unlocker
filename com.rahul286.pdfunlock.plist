@@ -18,8 +18,8 @@
         <key>RunAtLoad</key>
         <true/>
         <key>StandardErrorPath</key>
-        <string>/Users/rahul286/Developer/pdf-unlock/error.log</string>
+        <string>/Users/rahul286/Developer/pdf-unlock/logs/error.log</string>
         <key>StandardOutPath</key>
-        <string>/Users/rahul286/Developer/pdf-unlock/output.log</string>
+        <string>/Users/rahul286/Developer/pdf-unlock/logs/output.log</string>
     </dict>
 </plist>
