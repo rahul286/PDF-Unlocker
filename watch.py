@@ -1,26 +1,28 @@
 # alterative implementation using watchdog library
-
+import os
+import subprocess
 import time
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
+from unlock_pdf import unlock_pdf
+
 
 class MyHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-        print(f"File {event.src_path} has been modified")
-
     def on_created(self, event):
-        print(f"File {event.src_path} has been created")
-
-    def on_deleted(self, event):
-        print(f"File {event.src_path} has been deleted")
+        if event.src_path.endswith(".pdf"):
+            print(f"File {event.src_path} has been created")
+            unlock_pdf(event.src_path)
+            subprocess.run(["open", event.src_path], check=True)
 
 
 if __name__ == "__main__":
     event_handler = MyHandler()
     observer = Observer()
-    observer.schedule(event_handler, path=".", recursive=True)
+
+    downloads_path = os.path.expanduser("~/Downloads")
+    observer.schedule(event_handler, path=downloads_path, recursive=False)
     observer.start()
 
     try:
