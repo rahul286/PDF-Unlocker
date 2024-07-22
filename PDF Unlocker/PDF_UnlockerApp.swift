@@ -9,20 +9,33 @@ struct PDFUnlockerApp: App {
     init(){
         if LaunchAtLogin.isEnabled {
             print("Started PDF monitoring")
-            let filewatcher = FileWatcher([NSString(string: "~/Downloads").expandingTildeInPath])
+            // Get the Downloads directory path
+            let downloadsURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Downloads")
 
-            filewatcher.callback = {
-                event in
+            // Convert URL to String
+            let downloadsPath = downloadsURL.path
+            print("Monitoring path: \(downloadsPath)")
+
+            // Initialize FileWatcher with the path string
+            let filewatcher = FileWatcher([downloadsPath])
+
+            filewatcher.callback = { event in
+                print("Callback triggered") // Debug print to see if the callback is triggered
                 if event.fileCreated {
+                    print("File created event detected")
+                    print(event.path)
                     let fileName = event.path
-                    if fileName.hasSuffix(".pdf") {
-                        print("File created: \(fileName)")
+                    if fileName.lowercased().hasSuffix(".pdf") {
+                        print("Processing PDF File: \(fileName)")
                         processPDF(fileName: fileName)
                     }
+                } else {
+                    print("Other event detected: \(event)")
                 }
             }
 
-            filewatcher.start() // start monitoring
+            filewatcher.start()
+            print("Filewatcher Started")
         }
         else {
             print("Launch at login is disabled")
