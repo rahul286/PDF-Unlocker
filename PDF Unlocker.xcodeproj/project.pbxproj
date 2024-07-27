@@ -14,9 +14,9 @@
 		103C7D532C4CF5C6003104D5 /* PDF_UnlockerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103C7D522C4CF5C6003104D5 /* PDF_UnlockerUITestsLaunchTests.swift */; };
 		105696F12C4CFA6B00E3DB9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105696F02C4CFA6B00E3DB9E /* SettingsView.swift */; };
 		1079E4382C4E93BB00A737A8 /* FileWatcher in Frameworks */ = {isa = PBXBuildFile; productRef = 1079E4372C4E93BB00A737A8 /* FileWatcher */; };
-		10ADC6872C4EBF2B002DD5A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC6862C4EBF2B002DD5A0 /* Assets.xcassets */; };
 		10ADC6922C4EBFB6002DD5A0 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC68A2C4EBFB6002DD5A0 /* Contents.json */; };
 		10D1B21B2C4E391700039D1F /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 10D1B21A2C4E391700039D1F /* LaunchAtLogin */; };
+		10F241AF2C550D3500777C96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10F241AE2C550D3500777C96 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +47,8 @@
 		103C7D502C4CF5C6003104D5 /* PDF_UnlockerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF_UnlockerUITests.swift; sourceTree = "<group>"; };
 		103C7D522C4CF5C6003104D5 /* PDF_UnlockerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF_UnlockerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		105696F02C4CFA6B00E3DB9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		10ADC6862C4EBF2B002DD5A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../Downloads/Assets.xcassets; sourceTree = "<group>"; };
 		10ADC68A2C4EBFB6002DD5A0 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		10F241AE2C550D3500777C96 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../Downloads/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +103,7 @@
 			children = (
 				103C7D342C4CF5C5003104D5 /* PDF_UnlockerApp.swift */,
 				105696F02C4CFA6B00E3DB9E /* SettingsView.swift */,
-				10ADC6862C4EBF2B002DD5A0 /* Assets.xcassets */,
+				10F241AE2C550D3500777C96 /* Assets.xcassets */,
 				10ADC68A2C4EBFB6002DD5A0 /* Contents.json */,
 				103C7D3D2C4CF5C6003104D5 /* PDF_Unlocker.entitlements */,
 				103C7D3A2C4CF5C6003104D5 /* Preview Content */,
@@ -249,8 +249,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				10ADC6922C4EBFB6002DD5A0 /* Contents.json in Resources */,
+				10F241AF2C550D3500777C96 /* Assets.xcassets in Resources */,
 				103C7D3C2C4CF5C6003104D5 /* Preview Assets.xcassets in Resources */,
-				10ADC6872C4EBF2B002DD5A0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,48 +5,11 @@ import PDFKit
 
 @main
 struct PDFUnlockerApp: App {
-    // check if LaunchAtLogin.isEnabled is true
-    init(){
-        if LaunchAtLogin.isEnabled {
-            print("Started PDF monitoring")
-            // Get the Downloads directory path
-            let downloadsURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Downloads")
+    @StateObject private var fileWatcherManager = FileWatcherManager()
 
-            // Convert URL to String
-            let downloadsPath = downloadsURL.path
-            print("Monitoring path: \(downloadsPath)")
-
-            // Initialize FileWatcher with the path string
-            let filewatcher = FileWatcher([downloadsPath])
-
-            filewatcher.callback = { event in
-                print("Callback triggered") // Debug print to see if the callback is triggered
-                if event.fileCreated {
-                    print("File created event detected")
-                    print(event.path)
-                    let fileName = event.path
-                    if fileName.lowercased().hasSuffix(".pdf") {
-                        print("Processing PDF File: \(fileName)")
-                        processPDF(fileName: fileName)
-                    }
-                } else {
-                    print("Other event detected: \(event)")
-                }
-            }
-
-            filewatcher.start()
-            print("Filewatcher Started")
-        }
-        else {
-            print("Launch at login is disabled")
-        }
-    }
-    
     var body: some Scene {
-        
-        MenuBarExtra("PDF Unlocker", systemImage: "lock.open.rotation")  {
-            
-            SettingsLink{
+        MenuBarExtra("PDF Unlocker", systemImage: "lock.open.rotation") {
+            SettingsLink {
                 Text("Settings")
             }.keyboardShortcut(",", modifiers: .command)
             
@@ -55,19 +18,75 @@ struct PDFUnlockerApp: App {
             Button("Quit") {
                 NSApplication.shared.terminate(self)
             }
-            .padding()            
+            .padding()
         }
         
-        // Add a new settings scene
         Settings {
-            SettingsView()
+            SettingsView(fileWatcherManager: fileWatcherManager)
         }
     }
 }
 
-func processPDF(fileName: String){
+class FileWatcherManager: ObservableObject {
+    @Published var isMonitoring: Bool {
+        didSet {
+            UserDefaults.standard.set(isMonitoring, forKey: "isMonitoring")
+        }
+    }
+
+    private var fileWatcher: FileWatcher?
+
+    init() {
+        self.isMonitoring = UserDefaults.standard.bool(forKey: "isMonitoring")
+        if isMonitoring {
+            startFileWatcher()
+        }
+    }
+
+    func setupFileWatcher() -> FileWatcher {
+        let downloadsURL = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Downloads")
+        let downloadsPath = downloadsURL.path
+        print("Monitoring path: \(downloadsPath)")
+        
+        return FileWatcher([downloadsPath])
+    }
+
+    func startFileWatcher() {
+        print("Started PDF monitoring")
+        
+        fileWatcher = setupFileWatcher()
+        fileWatcher?.callback = { event in
+            print("Callback triggered")
+            if event.fileCreated {
+                print("File created event detected")
+                print(event.path)
+                let fileName = event.path
+                if fileName.lowercased().hasSuffix(".pdf") {
+                    print("Processing PDF File: \(fileName)")
+                    processPDF(fileName: fileName)
+                }
+            } else {
+                print("Other event detected: \(event)")
+            }
+        }
+        
+        fileWatcher?.start()
+        isMonitoring = true
+        print("Filewatcher Started")
+    }
+
+    func stopFileWatcher() {
+        print("Stopped PDF monitoring")
+        fileWatcher?.stop()
+        fileWatcher = nil
+        isMonitoring = false
+        print("Filewatcher Stopped")
+    }
+}
+
+func processPDF(fileName: String) {
     print("Processing PDF: \(fileName)")
-    
+
     let passwordList = UserDefaults.standard.string(forKey: "passwordList") ?? ""
     let passwords = passwordList.components(separatedBy: "\n")
 
@@ -76,11 +95,9 @@ func processPDF(fileName: String){
             print("Opened the PDF with password: \(password)")
             print("Number of pages: \(pdfDocument.pageCount)")
 
-            // Save the unlocked PDF to overwrite the original file
             let fileURL = URL(fileURLWithPath: fileName)
             if saveUnlockedPDF(originalURL: fileURL, unlockedDocument: pdfDocument) {
                 print("Successfully wrote unlocked PDF to file: \(fileURL.path)")
-                // Open the PDF in Preview
                 NSWorkspace.shared.open(fileURL)
             } else {
                 print("Failed to write unlocked PDF to file")
@@ -123,4 +140,50 @@ func saveUnlockedPDF(originalURL: URL, unlockedDocument: PDFDocument) -> Bool {
     }
     
     return newDocument.write(to: originalURL)
+}
+
+struct SettingsView: View {
+    @ObservedObject var fileWatcherManager: FileWatcherManager
+    @State private var passwordList: String = UserDefaults.standard.string(forKey: "passwordList") ?? ""
+
+    var body: some View {
+        Text("Enter passwords, one on each line.")
+            .padding(.top, 30)
+
+        TextEditor(text: $passwordList)
+            .border(Color.gray.opacity(0.5), width: 1)
+            .frame(width: 200, height: 203)
+            .font(.system(size: 13))
+            .lineSpacing(1)
+            .padding([.top, .bottom], 5)
+            .padding([.leading, .trailing], 20)
+
+        Button("Save Passwords") {
+            let passwordList = Array(Set(self.passwordList.components(separatedBy: "\n")))
+                .filter { !$0.isEmpty }
+                .sorted()
+                .joined(separator: "\n")
+            UserDefaults.standard.set(passwordList, forKey: "passwordList")
+            self.passwordList = passwordList
+        }
+        .padding(.bottom, 20)
+
+        Button(fileWatcherManager.isMonitoring ? "Stop PDF Monitoring" : "Start PDF Monitoring") {
+            if fileWatcherManager.isMonitoring {
+                print("Stopping PDF Monitoring manually")
+                fileWatcherManager.stopFileWatcher()
+            } else {
+                print("Start PDF Monitoring manually")
+                fileWatcherManager.startFileWatcher()
+            }
+        }
+        .padding(.bottom, 10)
+
+        LaunchAtLogin.Toggle()
+            .padding(20)
+    }
+}
+
+#Preview {
+    SettingsView(fileWatcherManager: FileWatcherManager())
 }
