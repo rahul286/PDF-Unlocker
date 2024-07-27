@@ -37,8 +37,8 @@ Launch again. This time click "**Open**".
 ## Known Issue
 
 - [ ] Find a way to sign/notarize app without paying for Apple's developer account.
-- [ ] You need to quit and relaunch app after saving settings to start monitoring.
-- [ ] Settings window sometimes doesn't come to front. Please check all windows.
+- [x] You need to quit and relaunch app after saving settings to start monitoring.
+- [x] Settings window sometimes doesn't come to front. Please check all windows.
 - [ ] Fix menu bar icon size. Also, set it to app icon image.
 
 ## Credits

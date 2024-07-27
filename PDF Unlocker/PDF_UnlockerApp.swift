@@ -16,7 +16,7 @@ struct PDFUnlockerApp: App {
             } preAction: {
                 NSApp.activate(ignoringOtherApps: true)
             } postAction: {
-                NSApp.activate(ignoringOtherApps: true)
+//                NSApp.activate(ignoringOtherApps: true)
             }.keyboardShortcut(",", modifiers: .command)
             
             Divider()
