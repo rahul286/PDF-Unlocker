@@ -45,6 +45,7 @@ Launch again. This time click "**Open**".
 
 * [LaunchAtLogin-Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern) by sindresorhus
 * [FileWatcher](https://github.com/eonist/FileWatcher) by eonist
+* [SettingsAccess](https://github.com/orchetect/SettingsAccess) by orchetect
 * [Unlock App Icon](https://thenounproject.com/icon/unlock-89653/) by Noun Project
 * ChatGPT and Gemini 🤖
 
