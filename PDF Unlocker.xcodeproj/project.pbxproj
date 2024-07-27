@@ -17,6 +17,7 @@
 		10ADC6922C4EBFB6002DD5A0 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC68A2C4EBFB6002DD5A0 /* Contents.json */; };
 		10D1B21B2C4E391700039D1F /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 10D1B21A2C4E391700039D1F /* LaunchAtLogin */; };
 		10F241AF2C550D3500777C96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10F241AE2C550D3500777C96 /* Assets.xcassets */; };
+		10F241B22C55189F00777C96 /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 10F241B12C55189F00777C96 /* SettingsAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10F241B22C55189F00777C96 /* SettingsAccess in Frameworks */,
 				10D1B21B2C4E391700039D1F /* LaunchAtLogin in Frameworks */,
 				1079E4382C4E93BB00A737A8 /* FileWatcher in Frameworks */,
 			);
@@ -155,6 +157,7 @@
 			packageProductDependencies = (
 				10D1B21A2C4E391700039D1F /* LaunchAtLogin */,
 				1079E4372C4E93BB00A737A8 /* FileWatcher */,
+				10F241B12C55189F00777C96 /* SettingsAccess */,
 			);
 			productName = "PDF Unlocker";
 			productReference = 103C7D312C4CF5C5003104D5 /* PDF Unlocker.app */;
@@ -231,6 +234,7 @@
 			packageReferences = (
 				10D1B2192C4E38F400039D1F /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				1079E4362C4E93BB00A737A8 /* XCRemoteSwiftPackageReference "FileWatcher" */,
+				10F241B02C55189F00777C96 /* XCRemoteSwiftPackageReference "SettingsAccess" */,
 			);
 			productRefGroup = 103C7D322C4CF5C5003104D5 /* Products */;
 			projectDirPath = "";
@@ -625,6 +629,14 @@
 				kind = branch;
 			};
 		};
+		10F241B02C55189F00777C96 /* XCRemoteSwiftPackageReference "SettingsAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/SettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -637,6 +649,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 10D1B2192C4E38F400039D1F /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
 			productName = LaunchAtLogin;
+		};
+		10F241B12C55189F00777C96 /* SettingsAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10F241B02C55189F00777C96 /* XCRemoteSwiftPackageReference "SettingsAccess" */;
+			productName = SettingsAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

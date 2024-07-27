@@ -2,15 +2,21 @@ import SwiftUI
 import LaunchAtLogin
 import FileWatcher
 import PDFKit
+import SettingsAccess
 
 @main
 struct PDFUnlockerApp: App {
     @StateObject private var fileWatcherManager = FileWatcherManager()
 
+
     var body: some Scene {
         MenuBarExtra("PDF Unlocker", systemImage: "lock.open.rotation") {
             SettingsLink {
                 Text("Settings")
+            } preAction: {
+                NSApp.activate(ignoringOtherApps: true)
+            } postAction: {
+                NSApp.activate(ignoringOtherApps: true)
             }.keyboardShortcut(",", modifiers: .command)
             
             Divider()
@@ -56,18 +62,18 @@ class FileWatcherManager: ObservableObject {
         
         fileWatcher = setupFileWatcher()
         fileWatcher?.callback = { event in
-            print("Callback triggered")
+//            print("Callback triggered")
             if event.fileCreated {
-                print("File created event detected")
-                print(event.path)
+//                print("File creation event detected")
+//                print(event.path)
                 let fileName = event.path
                 if fileName.lowercased().hasSuffix(".pdf") {
-                    print("Processing PDF File: \(fileName)")
                     processPDF(fileName: fileName)
                 }
-            } else {
-                print("Other event detected: \(event)")
-            }
+            } 
+//            else {
+//                print("Other event detected: \(event)")
+//            }
         }
         
         fileWatcher?.start()
@@ -85,7 +91,7 @@ class FileWatcherManager: ObservableObject {
 }
 
 func processPDF(fileName: String) {
-    print("Processing PDF: \(fileName)")
+    print("Processing PDF File: \(fileName)")
 
     let passwordList = UserDefaults.standard.string(forKey: "passwordList") ?? ""
     let passwords = passwordList.components(separatedBy: "\n")
@@ -97,7 +103,7 @@ func processPDF(fileName: String) {
 
             let fileURL = URL(fileURLWithPath: fileName)
             if saveUnlockedPDF(originalURL: fileURL, unlockedDocument: pdfDocument) {
-                print("Successfully wrote unlocked PDF to file: \(fileURL.path)")
+//                print("Successfully wrote unlocked PDF to file: \(fileURL.path)")
                 NSWorkspace.shared.open(fileURL)
             } else {
                 print("Failed to write unlocked PDF to file")
