@@ -96,12 +96,32 @@ func processPDF(fileName: String) {
     let passwordList = UserDefaults.standard.string(forKey: "passwordList") ?? ""
     let passwords = passwordList.components(separatedBy: "\n")
 
+    let fileURL = URL(fileURLWithPath: fileName)
+    let fileManager = FileManager.default
+
+    guard fileManager.fileExists(atPath: fileURL.path) else {
+        print("File does not exist at path: \(fileURL.path)")
+        return
+    }
+
+    guard let pdfDocument = PDFDocument(url: fileURL) else {
+        print("Could not open PDF document at: \(fileURL.path)")
+        return
+    }
+
+    // Check encryption once up front
+    guard pdfDocument.isEncrypted else {
+        print("PDF is not encrypted, skipping unlock.")
+        //Open PDF anyway
+        NSWorkspace.shared.open(fileURL)
+        return
+    }
+
     for password in passwords {
-        if let pdfDocument = openLockedPDF(fileName: fileName, password: password) {
+        if pdfDocument.unlock(withPassword: password) {
             print("Opened the PDF with password: \(password)")
             print("Number of pages: \(pdfDocument.pageCount)")
 
-            let fileURL = URL(fileURLWithPath: fileName)
             if saveUnlockedPDF(originalURL: fileURL, unlockedDocument: pdfDocument) {
 //                print("Successfully wrote unlocked PDF to file: \(fileURL.path)")
                 NSWorkspace.shared.open(fileURL)
@@ -111,29 +131,6 @@ func processPDF(fileName: String) {
             break
         }
     }
-}
-
-func openLockedPDF(fileName: String, password: String) -> PDFDocument? {
-    let fileManager = FileManager.default
-    let fileURL = URL(fileURLWithPath: fileName)
-    
-    guard fileManager.fileExists(atPath: fileURL.path) else {
-        print("File does not exist at path: \(fileURL.path)")
-        return nil
-    }
-    
-    guard let pdfDocument = PDFDocument(url: fileURL) else {
-        print("Could not open PDF document at: \(fileURL.path)")
-        return nil
-    }
-    
-    if pdfDocument.isEncrypted {
-        if pdfDocument.unlock(withPassword: password) {
-            print("Successfully unlocked the PDF.")
-            return pdfDocument
-        }
-    }
-    return nil
 }
 
 func saveUnlockedPDF(originalURL: URL, unlockedDocument: PDFDocument) -> Bool {
